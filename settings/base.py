@@ -1,7 +1,8 @@
 import os
 
-from settings.conf import *  # noqa
 from django.urls import reverse_lazy
+
+from settings.conf import *  # noqa
 
 
 # path
@@ -43,7 +44,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -90,6 +91,7 @@ UNFOLD = {
     "SHOW_HISTORY": True,
     "SHOW_VIEW_ON_SITE": True,
     "ENVIRONMENT": "apps.blog.callbacks.environment_callback",
+    "DASHBOARD_CALLBACK": "apps.blog.callbacks.dashboard_callback",
     "COLORS": {
         "primary": {
             "50": "239 246 255",

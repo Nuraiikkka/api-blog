@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+
+{% load i18n unfold %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+    {% component "unfold/components/flex.html" with class="gap-4 mb-6" %}
+        {% for item in kpi %}
+            {% component "unfold/components/card.html" with title=item.title %}
+                <p class="text-3xl font-semibold text-important">{{ item.value }}</p>
+            {% endcomponent %}
+        {% endfor %}
+    {% endcomponent %}
+
+    {% component "unfold/components/card.html" with title="Latest posts" %}
+        {% component "unfold/components/table.html" with table=table card_included=1 %}{% endcomponent %}
+    {% endcomponent %}
+{% endblock %}
