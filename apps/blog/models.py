@@ -14,6 +14,10 @@ from django.db.models import (
 
 
 class Category(Model):
+    """
+    Post category.
+    """
+
     NAME_MAX_LEN = 100
 
     name = CharField(max_length=NAME_MAX_LEN, unique=True)
@@ -22,19 +26,43 @@ class Category(Model):
     class Meta:
         verbose_name_plural = "categories"
 
+    def __str__(self) -> str:
+        """
+        Return the name.
+        """
+        return self.name
+
 
 class Tag(Model):
+    """
+    Post tag.
+    """
+
     NAME_MAX_LEN = 50
 
     name = CharField(max_length=NAME_MAX_LEN, unique=True)
     slug = SlugField(unique=True)
 
+    def __str__(self) -> str:
+        """
+        Return the name.
+        """
+        return self.name
+
 
 class Post(Model):
+    """
+    Blog post.
+    """
+
     TITLE_MAX_LEN = 200
     STATUS_MAX_LEN = 50
 
     class Status(TextChoices):
+        """
+        Post statuses.
+        """
+
         DRAFT = "draft"
         PUBLISHED = "published"
 
@@ -53,9 +81,25 @@ class Post(Model):
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        """
+        Return the title.
+        """
+        return self.title
+
 
 class Comment(Model):
+    """
+    Comment on a post.
+    """
+
     post = ForeignKey(to=Post, on_delete=CASCADE)
     author = ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=CASCADE)
     body = TextField()
     created_at = DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        """
+        Return the start of the comment text.
+        """
+        return self.body[:50]
