@@ -8,84 +8,54 @@ from django.db.models import (
     ManyToManyField,
     TextChoices,
     DateTimeField,
-    CASCADE, 
+    CASCADE,
     SET_NULL,
 )
 
-class Category(Model):
 
+class Category(Model):
     NAME_MAX_LEN = 100
 
-    name = CharField(
-        max_length = NAME_MAX_LEN,
-        unique = True
-    )
-    slug = SlugField(
-        unique = True
-    )
+    name = CharField(max_length=NAME_MAX_LEN, unique=True)
+    slug = SlugField(unique=True)
+
+    class Meta:
+        verbose_name_plural = "categories"
+
 
 class Tag(Model):
     NAME_MAX_LEN = 50
 
-    name = CharField(
-        max_length = NAME_MAX_LEN,
-        unique = True
-    )
-    slug = SlugField(
-        unique = True
-    )
+    name = CharField(max_length=NAME_MAX_LEN, unique=True)
+    slug = SlugField(unique=True)
+
 
 class Post(Model):
-
     TITLE_MAX_LEN = 200
     STATUS_MAX_LEN = 50
 
     class Status(TextChoices):
-        DRAFT = 'draft'
-        PUBLISHED = 'published'
+        DRAFT = "draft"
+        PUBLISHED = "published"
 
-    author = ForeignKey(
-        to = settings.AUTH_USER_MODEL,
-        on_delete = CASCADE
-    )
-    title = CharField(
-        max_length = TITLE_MAX_LEN
-    )
-    slug = SlugField(
-        unique = True
-    )
+    author = ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=CASCADE)
+    title = CharField(max_length=TITLE_MAX_LEN)
+    slug = SlugField(unique=True)
     body = TextField()
     category = ForeignKey(
-        to = Category,
-        on_delete = SET_NULL,
-        null = True
+        to=Category,
+        on_delete=SET_NULL,
+        null=True,
+        blank=True,
     )
-    tags = ManyToManyField(
-        to = Tag, 
-        blank = True
-    )
-    status = CharField(
-        max_length = STATUS_MAX_LEN,
-        choices = Status.choices
-    )
-    created_at = DateTimeField(
-        auto_now_add = True
-    )
-    updated_at = DateTimeField(
-        auto_now = True
-    )
+    tags = ManyToManyField(to=Tag, blank=True)
+    status = CharField(max_length=STATUS_MAX_LEN, choices=Status.choices)
+    created_at = DateTimeField(auto_now_add=True)
+    updated_at = DateTimeField(auto_now=True)
+
 
 class Comment(Model):
-    post = ForeignKey(
-        to = Post,
-        on_delete = CASCADE
-    )
-    author = ForeignKey(
-        to = settings.AUTH_USER_MODEL,
-        on_delete = CASCADE
-    )
+    post = ForeignKey(to=Post, on_delete=CASCADE)
+    author = ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=CASCADE)
     body = TextField()
-    created_at = DateTimeField(
-        auto_now_add = True
-    )
-
+    created_at = DateTimeField(auto_now_add=True)

@@ -11,6 +11,9 @@ ASGI_APPLICATION = 'settings.asgi.application'
 
 #apps
 DJANGO_AND_THIRD_PARTY_APPS = [
+    'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,3 +80,10 @@ STATIC_URL = 'static/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+UNFOLD = {
+    "SITE_TITLE": "Blog admin", 
+    "SITE_HEADER": "Blog Admin",
+    "SITE_URL": "/",
+    "SITE_SYMBOL": "article",
+}
